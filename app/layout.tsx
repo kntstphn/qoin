@@ -23,6 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        {/* Optional: Include other meta tags for better mobile experience */}
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body className={`flex w-full h-[100vh] ${inter.className}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
