@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  @apply text-Jaguar;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  @apply bg-Jaguar;
+  color: whitesmoke;
+}
+
+/* LOGIN */
+.login-page-left {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.login-page-right {
+  background-color: rgba(255, 255, 255, 0.75);
+}
