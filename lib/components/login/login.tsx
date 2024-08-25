@@ -22,8 +22,9 @@ function Login() {
     }
   };
   return (
-    <div className="text-[whitesmoke] flex justify-center px-[200px] pt-[100px] w-full h-full">
-      <div className="flex w-full bg-green-300 h-[500px] justify-center items-center">
+    <div className="text-[whitesmoke] flex lg:flex-row flex-col justify-center global-container lg:px-[200px] lg:pt-[100px] w-full h-full">
+      <div className="flex w-full bg-red-300 lg:h-[500px] p-5">test</div>
+      <div className="flex w-full bg-green-300 lg:h-[500px] justify-center items-center p-5">
         <form className="flex flex-col w-2/3" onSubmit={handleLogin}>
           <label className="mb-2" htmlFor="username">
             Username
@@ -53,7 +54,6 @@ function Login() {
           </button>
         </form>
       </div>
-      <div className="flex w-full bg-red-300 h-[500px]">test</div>
     </div>
   );
 }
