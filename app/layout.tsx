@@ -27,6 +27,9 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         {/* Optional: Include other meta tags for better mobile experience */}
         <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-title" content="Qoin" />
       </head>
       <body className={`flex w-full h-[100vh] ${inter.className}`}>
         <AuthProvider>{children}</AuthProvider>
