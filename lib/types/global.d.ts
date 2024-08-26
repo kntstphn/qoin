@@ -4,4 +4,13 @@ interface GlobalContextType {
   checkAuthAndRedirect: () => void;
 }
 
-interface TrackerModalType {}
+interface BottomNavProps {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setBottomNav: React.Dispatch<React.SetStateAction<string>>;
+  bottomNav: string;
+}
+
+interface TrackerModal {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modal: boolean;
+}

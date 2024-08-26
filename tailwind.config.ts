@@ -30,6 +30,7 @@ const config: Config = {
         Cinnabar: "#EE4D2B",
         DarkCharcoal: "#292C31",
         Onyx: "#353A40",
+        Firebrick: "#BD2C0F",
       },
     },
   },
