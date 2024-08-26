@@ -1,6 +1,7 @@
 import { db } from "@lib/firebase/config";
 import { collection, addDoc } from "firebase/firestore";
 
+export const dynamic = "force-dynamic";
 export async function POST(request) {
   try {
     const { amount, remarks, timestamp, type } = await request.json();

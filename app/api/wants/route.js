@@ -1,6 +1,7 @@
 import { db } from "@lib/firebase/config";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
+export const dynamic = "force-dynamic";
 export async function POST(request) {
   try {
     const { value } = await request.json(); // Extract the value from the request body

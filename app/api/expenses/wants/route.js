@@ -1,6 +1,7 @@
 import { db } from "@lib/firebase/config";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     // Create a query to get documents from the "expenses" collection where "type" is "needs"
