@@ -12,7 +12,10 @@ export async function POST(request) {
     });
 
     return new Response(
-      JSON.stringify({ id: docRef.id, message: "Value added successfully!" }),
+      JSON.stringify({
+        id: docRef.id,
+        message: "Wants Amount added successfully!",
+      }),
       {
         status: 200,
         headers: {
@@ -21,12 +24,15 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding value to Firestore: ", error);
-    return new Response(JSON.stringify({ error: "Failed to add value" }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.error("Error adding wants amount to Firestore: ", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to add wants amount" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }

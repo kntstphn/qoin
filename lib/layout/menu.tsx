@@ -23,8 +23,8 @@ function Menu() {
   };
 
   return (
-    <div className="sticky flex px-5 lg:px-10 py-3 justify-between items-center w-full bg-PearlRiver">
-      <a href="/">Insert LOGo</a>
+    <div className="flex bottom-0 top-10 px-5 lg:px-10 py-3 justify-between items-center w-full rounded-b-3xl">
+      <a href="/">Insert LOGO </a>
       {!user && !loading && (
         <div className="text-black flex gap-5 lg:gap-10">
           <a href="/login">Login</a>
@@ -41,11 +41,11 @@ function Menu() {
       {user && (
         <>
           <GiHamburgerMenu
-            className="text-white lg:hidden w-auto h-[30px]"
+            className="flex lg:hidden w-auto h-[20px] text-3xl text-Cinnabar"
             onClick={() => setShowMenu(!showMenu)}
           />
           {showMenu && (
-            <div className="text-black fixed flex flex-col h-full w-[80%] gap-5 top-0 bottom-0 right-0 bg-red-300 p-5">
+            <div className="text-black fixed flex flex-col h-full w-[80%] gap-5 top-0 bottom-0 right-0 bg-red-300 p-5 z-50">
               <div
                 className="flex w-full justify-end"
                 onClick={() => setShowMenu(!showMenu)}

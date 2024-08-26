@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import BottomNav from "./bottomNav";
 
 function Dashboard() {
   const [wants, setWants] = useState<number>(0);
+  const [modal, setModal] = useState(false);
+  const [bottomNav, setBottomNav] = useState(" ");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Convert the input value to a number
@@ -25,16 +28,9 @@ function Dashboard() {
   }
 
   return (
-    <div className="text-[whitesmoke]">
+    <div className="text-[whitesmoke] h-full">
       Dashboard yay
-      <input type="number" className="text-black" onChange={handleChange} />
-      <button
-        onClick={() => {
-          addValue({ value: Number(wants) });
-        }}
-      >
-        Add
-      </button>
+      <BottomNav />
     </div>
   );
 }

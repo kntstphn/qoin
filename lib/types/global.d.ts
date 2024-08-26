@@ -3,3 +3,5 @@ interface GlobalContextType {
   setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthAndRedirect: () => void;
 }
+
+interface TrackerModalType {}

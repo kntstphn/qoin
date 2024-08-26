@@ -6,6 +6,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./public/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -26,6 +27,9 @@ const config: Config = {
         Haiti: "#190F2C",
         Jaguar: "#060209",
         PearlRiver: "#D9DDDC",
+        Cinnabar: "#EE4D2B",
+        DarkCharcoal: "#292C31",
+        Onyx: "#353A40",
       },
     },
   },

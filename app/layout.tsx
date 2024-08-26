@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@styles/globals.css";
 import { AuthProvider } from "@/lib/layout/authContext";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,7 +31,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="apple-mobile-web-app-title" content="Qoin" />
       </head>
-      <body className={`flex w-full h-[100vh] ${inter.className}`}>
+      <body className={`block h-[100vh] ${inter.className}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
