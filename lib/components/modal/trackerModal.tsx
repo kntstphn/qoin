@@ -88,7 +88,7 @@ function TrackerModal({ modal, setModal }: TrackerModal) {
                   <label htmlFor="remarks">Remarks</label>
                   <textarea
                     id="remarks"
-                    rows="3"
+                    rows={3}
                     className="p-2 border border-gray-300 rounded text-DarkCharcoal"
                     value={remarks}
                     onChange={(e) => setRemarks(e.target.value)}
