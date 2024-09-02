@@ -82,8 +82,8 @@ function TrackerModal({ modal, setModal }: TrackerModal) {
                     <option value="needs">Needs</option>
                     <option value="wants">Wants</option>
                     <option value="savings">Savings</option>
-                    <option value="emergency-funds">Emergency Funds</option>
-                    <option value="travel-funds">Travel Funds</option>
+                    <option value="emergencyFunds">Emergency Funds</option>
+                    <option value="travelFunds">Travel Funds</option>
                   </select>
                   <label htmlFor="remarks">Remarks</label>
                   <textarea

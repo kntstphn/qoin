@@ -34,7 +34,10 @@ function BottomNav({ setModal, setBottomNav, bottomNav }: BottomNavProps) {
       </button>
       <button
         className="flex flex-col items-center"
-        onClick={() => setModal(true)}
+        onClick={() => {
+          setModal(true);
+          setBottomNav("savings");
+        }}
       >
         <GiPiggyBank size={24} className="text-Cinnabar" />
       </button>

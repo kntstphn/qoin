@@ -14,3 +14,9 @@ interface TrackerModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   modal: boolean;
 }
+
+interface SavingsModal {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modal: boolean;
+  bottomNav: string;
+}

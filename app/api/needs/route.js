@@ -1,6 +1,7 @@
 import { db } from "@lib/firebase/config";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     // Get all documents from the "wants" collection
@@ -37,6 +38,42 @@ export async function GET() {
     console.error("Error retrieving total amount from Firestore: ", error);
     return new Response(
       JSON.stringify({ error: "Failed to retrieve total amount" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+}
+
+export async function POST(request) {
+  try {
+    const { amount, timestamp } = await request.json(); // Extract the value from the request body
+
+    // Add the value to a Firestore collection
+    const docRef = await addDoc(collection(db, "needs"), {
+      amount: Number(amount),
+      timestamp: new Date(timestamp), // Optional: Add a timestamp
+    });
+
+    return new Response(
+      JSON.stringify({
+        id: docRef.id,
+        message: "Neeeds Amount added successfully!",
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Error adding needs amount to Firestore: ", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to add needs amount" }),
       {
         status: 500,
         headers: {

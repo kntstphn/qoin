@@ -7,7 +7,7 @@ export async function POST(request) {
     const { amount, timestamp } = await request.json(); // Extract the value from the request body
 
     // Add the value to a Firestore collection
-    const docRef = await addDoc(collection(db, "wants"), {
+    const docRef = await addDoc(collection(db, "savings"), {
       amount: Number(amount),
       timestamp: new Date(timestamp), // Optional: Add a timestamp
     });
@@ -15,7 +15,7 @@ export async function POST(request) {
     return new Response(
       JSON.stringify({
         id: docRef.id,
-        message: "Wants Amount added successfully!",
+        message: "Savings Amount added successfully!",
       }),
       {
         status: 200,
@@ -25,9 +25,9 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding wants amount to Firestore: ", error);
+    console.error("Error adding savings amount to Firestore: ", error);
     return new Response(
-      JSON.stringify({ error: "Failed to add wants amount" }),
+      JSON.stringify({ error: "Failed to add savings amount" }),
       {
         status: 500,
         headers: {
@@ -41,7 +41,7 @@ export async function POST(request) {
 export async function GET() {
   try {
     // Get all documents from the "wants" collection
-    const querySnapshot = await getDocs(collection(db, "wants"));
+    const querySnapshot = await getDocs(collection(db, "savings"));
 
     // Initialize a variable to store the total amount
     let totalAmount = 0;
