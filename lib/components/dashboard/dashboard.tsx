@@ -11,6 +11,7 @@ function Dashboard() {
   const [needs, setNeeds] = useState<number>(0);
   const [travelBudget, setTravelBudget] = useState<number>(0);
   const [savings, setSavings] = useState<number>(0);
+  const [emergencyFunds, setEmergencyFunds] = useState<number>(0);
   const [modal, setModal] = useState(false);
   const [bottomNav, setBottomNav] = useState(" ");
 
@@ -84,11 +85,30 @@ function Dashboard() {
     }
   }
 
+  async function fetchTotalEmergencyFunds() {
+    const response = await fetch("/api/emergencyFunds"); // This assumes you have the GET method setup on this endpoint
+    const data = await response.json();
+    if (response.ok) {
+      const expenseResponse = await fetch("/api/expenses/emergencyFunds");
+      const expenses = await expenseResponse.json();
+      if (expenseResponse.ok) {
+        setEmergencyFunds(data.totalAmount - expenses.totalAmount);
+      } else {
+        console.error(
+          "Failed to fetch total expenses on emergency funds amount"
+        );
+      }
+    } else {
+      console.error("Failed to fetch total emergency funds amount");
+    }
+  }
+
   useEffect(() => {
     fetchTotalWants();
     fetchTotalNeeds();
     fetchTotalSavings();
     fetchTotalTravelBudget();
+    fetchTotalEmergencyFunds();
   });
 
   return (
@@ -148,7 +168,6 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {" "}
               {travelBudget}
             </span>
           </div>
@@ -161,7 +180,9 @@ function Dashboard() {
             <span className="text-[20px] flex items-center text-gray-600">
               Php
             </span>
-            <span className=" text-[24px] text-Cinnabar font-bold">0</span>
+            <span className=" text-[24px] text-Cinnabar font-bold">
+              {emergencyFunds}
+            </span>
           </div>
         </div>
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
