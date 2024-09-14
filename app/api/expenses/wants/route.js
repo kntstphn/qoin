@@ -4,31 +4,23 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 export const dynamic = "force-dynamic";
 export async function GET() {
   try {
-    // Create a query to get documents from the "expenses" collection where "type" is "needs"
+    // Create a query to get documents from the "expenses" collection where "type" is "wants"
     const q = query(collection(db, "expenses"), where("type", "==", "wants"));
 
-    // Get the documents matching the query
     const querySnapshot = await getDocs(q);
-
-    // Initialize a variable to store the total amount
     let totalAmount = 0;
 
-    // Iterate through each document and add the amount to the total
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      console.log("Document data:", data); // Log document data for debugging
       if (data.amount) {
         totalAmount += data.amount;
-        console.log("Current totalAmount expenses:", totalAmount); // Log current total amount
       }
     });
-
-    console.log("Final totalAmount:", totalAmount); // Log final total amount
 
     return new Response(
       JSON.stringify({
         totalAmount,
-        message: "Total amount retrieved successfully!",
+        message: "Total wants retrieved successfully!",
       }),
       {
         status: 200,
@@ -38,9 +30,9 @@ export async function GET() {
       }
     );
   } catch (error) {
-    console.error("Error retrieving total amount from Firestore: ", error);
+    console.error("Error retrieving total wants from Firestore: ", error);
     return new Response(
-      JSON.stringify({ error: "Failed to retrieve total amount" }),
+      JSON.stringify({ error: "Failed to retrieve total wants" }),
       {
         status: 500,
         headers: {
