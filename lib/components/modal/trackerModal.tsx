@@ -64,18 +64,10 @@ function TrackerModal({ modal, setModal }: TrackerModal) {
                   <label htmlFor="amount">Amount</label>
                   <input
                     type="number"
-                    step="0.01"
                     id="amount"
                     className="p-2 border border-gray-300 rounded text-DarkCharcoal"
                     value={amount}
-                    onChange={(e) => {
-                      const value = parseFloat(e.target.value);
-                      if (!isNaN(value)) {
-                        setAmount(value.toFixed(2)); // Format the value to 2 decimal places
-                      } else {
-                        setAmount(""); // Handle empty or invalid input
-                      }
-                    }}
+                    onChange={(e) => setAmount(e.target.value)}
                   />
                   <label htmlFor="type">Type</label>
                   <select

@@ -15,12 +15,6 @@ function Dashboard() {
   const [modal, setModal] = useState(false);
   const [bottomNav, setBottomNav] = useState(" ");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Convert the input value to a number
-    const value = e.target.value === "" ? 0 : Number(e.target.value);
-    setWants(value);
-  };
-
   async function fetchTotalWants() {
     const response = await fetch("/api/wants"); // This assumes you have the GET method setup on this endpoint
     const data = await response.json();
@@ -129,7 +123,7 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {wants}
+              {wants.toFixed(2)}
             </span>
           </div>
         </div>
@@ -142,7 +136,7 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {needs}
+              {needs.toFixed(2)}
             </span>
           </div>
         </div>
@@ -155,7 +149,7 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {savings}
+              {savings.toFixed(2)}
             </span>
           </div>
         </div>
@@ -168,7 +162,7 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {travelBudget}
+              {travelBudget.toFixed(2)}
             </span>
           </div>
         </div>
@@ -181,7 +175,7 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {emergencyFunds}
+              {emergencyFunds.toFixed(2)}
             </span>
           </div>
         </div>
