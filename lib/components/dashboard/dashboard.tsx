@@ -12,6 +12,8 @@ function Dashboard() {
   const [travelBudget, setTravelBudget] = useState<number>(0);
   const [savings, setSavings] = useState<number>(0);
   const [emergencyFunds, setEmergencyFunds] = useState<number>(0);
+  const [debt, setDebt] = useState<number>(0);
+  const [credit, setCredit] = useState<number>(0);
   const [modal, setModal] = useState(false);
   const [bottomNav, setBottomNav] = useState(" ");
 
@@ -97,16 +99,50 @@ function Dashboard() {
     }
   }
 
+  async function fetchTotalDebts() {
+    const response = await fetch("/api/debts"); // This assumes you have the GET method setup on this endpoint
+    const data = await response.json();
+    if (response.ok) {
+      const expenseResponse = await fetch("/api/debts");
+      const expenses = await expenseResponse.json();
+      if (expenseResponse.ok) {
+        setDebt(data.totalAmount);
+      } else {
+        console.error("Failed to fetch total expenses on debt amount");
+      }
+    } else {
+      console.error("Failed to fetch total debt amount");
+    }
+  }
+
+  async function fetchTotalCredits() {
+    const response = await fetch("/api/credits"); // This assumes you have the GET method setup on this endpoint
+    const data = await response.json();
+    if (response.ok) {
+      const expenseResponse = await fetch("/api/credits");
+      const expenses = await expenseResponse.json();
+      if (expenseResponse.ok) {
+        setCredit(data.totalAmount);
+      } else {
+        console.error("Failed to fetch total expenses on credit amount");
+      }
+    } else {
+      console.error("Failed to fetch total credit amount");
+    }
+  }
+
   useEffect(() => {
     fetchTotalWants();
     fetchTotalNeeds();
     fetchTotalSavings();
     fetchTotalTravelBudget();
     fetchTotalEmergencyFunds();
+    fetchTotalDebts();
+    fetchTotalCredits();
   });
 
   return (
-    <div className="text-[whitesmoke] h-full flex flex-col justify-around gap-10 py-5 px-7">
+    <div className="text-[whitesmoke] h-full flex flex-col justify-around gap-10 py-5 px-7 mb-10">
       {modal && bottomNav === "tracker" && (
         <TrackerModal modal={modal} setModal={setModal} />
       )}
@@ -180,12 +216,30 @@ function Dashboard() {
           </div>
         </div>
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
-          <span className="text-gray-600 text-[14px] mb-[-10px]">Debt</span>
-          <span className=" text-[24px] text-Cinnabar">Php 12000</span>
+          <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
+            Debt
+          </span>
+          <div className="flex gap-2">
+            <span className="text-[20px] flex items-center text-gray-600">
+              Php
+            </span>
+            <span className=" text-[24px] text-Cinnabar font-bold">
+              {debt.toFixed(2)}
+            </span>
+          </div>
         </div>
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
-          <span className="text-gray-600 text-[14px] mb-[-10px]">Credit</span>
-          <span className=" text-[24px] text-Cinnabar">Php 12000</span>
+          <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
+            Credit
+          </span>
+          <div className="flex gap-2">
+            <span className="text-[20px] flex items-center text-gray-600">
+              Php
+            </span>
+            <span className=" text-[24px] text-Cinnabar font-bold">
+              {credit.toFixed(2)}
+            </span>
+          </div>
         </div>
       </>
 

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     // Create a query to get documents from the "expenses" collection where "type" is "needs"
     const q = query(
-      collection(db, "exoenses"),
+      collection(db, "expenses"),
       where("type", "==", "emergencyFunds")
     );
 
