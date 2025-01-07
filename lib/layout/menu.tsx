@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Logo from "@images/logo.png";
+import Logo from "@images/QoinLogo.png";
 import { useAuth } from "@lib/layout/authContext";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { signOut } from "firebase/auth";
@@ -24,7 +24,9 @@ function Menu() {
 
   return (
     <div className="flex bottom-0 top-10 px-5 lg:px-10 py-3 justify-between items-center w-full rounded-b-3xl">
-      <a href="/">Insert LOGO </a>
+      <a href="/">
+        <Image src={Logo} alt="logo" width={50} height={50} />
+      </a>
       {!user && !loading && (
         <div className="text-black flex gap-5 lg:gap-10">
           <a href="/login">Login</a>

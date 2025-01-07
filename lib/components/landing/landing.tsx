@@ -1,11 +1,13 @@
 import React from "react";
+import Logo from "@images/QoinLogo.png";
+import Image from "next/image";
 
 export const Landing = () => {
   return (
     <div className="flex h-full items-center w-full">
       <div className="flex flex-col w-full gap-2 p-5 lg:p-[150px]">
         <div className="w-full flex justify-center items-center">
-          Insert Logo Here
+          <Image src={Logo} alt="logo" width={300} height={300} />
         </div>
         <p className="text-white text-justify flex text-[15px] lg:text-[25px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
