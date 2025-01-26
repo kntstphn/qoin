@@ -25,7 +25,7 @@ function Menu() {
   return (
     <div className="flex bottom-0 top-10 px-5 lg:px-10 py-3 justify-between items-center w-full rounded-b-3xl">
       <a href="/">
-        <Image src={Logo} alt="logo" width={50} height={50} />
+        <Image src={Logo} alt="logo" width={45} height={45} />
       </a>
       {!user && !loading && (
         <div className="text-black flex gap-5 lg:gap-10">
@@ -55,7 +55,7 @@ function Menu() {
                 X
               </div>
               <a href="/dashboard">Dashboard</a>
-              <a href="/expenses">Expenses</a>
+              <a href="/holdings">Holdings</a>
               <a href="/credit">Credit</a>
               <a href="/debt">Debt</a>
               <button onClick={handleLogout}>Logout</button>

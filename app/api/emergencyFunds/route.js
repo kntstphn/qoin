@@ -21,7 +21,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         totalAmount,
-        message: "Total Emergency Funds retrieved successfully!",
+        message: "Total Emergency Funds expenses retrieved successfully!",
       }),
       {
         status: 200,
@@ -32,11 +32,13 @@ export async function GET() {
     );
   } catch (error) {
     console.error(
-      "Error retrieving total emergency funds from Firestore: ",
+      "Error retrieving total emergency funds expenses from Firestore: ",
       error
     );
     return new Response(
-      JSON.stringify({ error: "Failed to retrieve total emergency funds" }),
+      JSON.stringify({
+        error: "Failed to retrieve total emergency funds expenses",
+      }),
       {
         status: 500,
         headers: {
@@ -49,10 +51,12 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const { amount, timestamp } = await request.json();
+    const { amount, timestamp, wallet, remarks } = await request.json();
 
     // Add the value to a Firestore collection
     const docRef = await addDoc(collection(db, "emergency_funds"), {
+      wallet: wallet,
+      remarks: remarks,
       amount: Number(amount),
       timestamp: new Date(timestamp),
     });
@@ -60,7 +64,7 @@ export async function POST(request) {
     return new Response(
       JSON.stringify({
         id: docRef.id,
-        message: "Emergency Funds amount added successfully!",
+        message: "Emergency Funds expenses added successfully!",
       }),
       {
         status: 200,
@@ -70,9 +74,12 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding Emergency Funds amount to Firestore: ", error);
+    console.error(
+      "Error adding Emergency Funds expenses to Firestore: ",
+      error
+    );
     return new Response(
-      JSON.stringify({ error: "Failed to add emergency funds amount" }),
+      JSON.stringify({ error: "Failed to add emergency funds expenses" }),
       {
         status: 500,
         headers: {

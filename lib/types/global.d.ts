@@ -10,13 +10,14 @@ interface BottomNavProps {
   bottomNav: string;
 }
 
-interface TrackerModal {
+interface ExpenditureModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   modal: boolean;
+  holdings: { name: string }[];
 }
 
-interface SavingsModal {
+interface DisbursementModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   modal: boolean;
-  bottomNav: string;
+  holdings: { name: string }[];
 }

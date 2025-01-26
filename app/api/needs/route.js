@@ -19,7 +19,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         totalAmount,
-        message: "Total needs retrieved successfully!",
+        message: "Total needs expenses retrieved successfully!",
       }),
       {
         status: 200,
@@ -29,7 +29,10 @@ export async function GET() {
       }
     );
   } catch (error) {
-    console.error("Error retrieving total needs from Firestore: ", error);
+    console.error(
+      "Error retrieving total needs expenses from Firestore: ",
+      error
+    );
     return new Response(
       JSON.stringify({ error: "Failed to retrieve total needs" }),
       {
@@ -44,18 +47,20 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const { amount, timestamp } = await request.json();
+    const { amount, timestamp, remarks, wallet } = await request.json();
 
     // Add the value to a Firestore collection
     const docRef = await addDoc(collection(db, "needs"), {
       amount: Number(amount),
       timestamp: new Date(timestamp),
+      remarks: remarks,
+      wallet: wallet,
     });
 
     return new Response(
       JSON.stringify({
         id: docRef.id,
-        message: "Neeeds Amount added successfully!",
+        message: "Needs Expenses successfully added!",
       }),
       {
         status: 200,
@@ -65,7 +70,7 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding needs amount to Firestore: ", error);
+    console.error("Error adding needs expenses to Firestore: ", error);
     return new Response(
       JSON.stringify({ error: "Failed to add needs amount" }),
       {

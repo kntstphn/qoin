@@ -4,9 +4,11 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 export const dynamic = "force-dynamic";
 export async function POST(request) {
   try {
-    const { amount, timestamp } = await request.json();
+    const { amount, timestamp, remarks, wallet } = await request.json();
 
-    const docRef = await addDoc(collection(db, "travel_funds"), {
+    const docRef = await addDoc(collection(db, "fun_funds"), {
+      wallet: wallet,
+      remarks: remarks,
       amount: Number(amount),
       timestamp: new Date(timestamp),
     });
@@ -14,7 +16,7 @@ export async function POST(request) {
     return new Response(
       JSON.stringify({
         id: docRef.id,
-        message: "Travel Funds amount added successfully!",
+        message: "Fun Funds expenses added successfully!",
       }),
       {
         status: 200,
@@ -24,9 +26,9 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding Travel Funds amount to Firestore: ", error);
+    console.error("Error adding Fun Funds expensess to Firestore: ", error);
     return new Response(
-      JSON.stringify({ error: "Failed to add Travel Funds amount" }),
+      JSON.stringify({ error: "Failed to add Travel Funds expenses" }),
       {
         status: 500,
         headers: {
@@ -39,8 +41,8 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    // Get all documents from the "travel_funds" collection
-    const querySnapshot = await getDocs(collection(db, "travel_funds"));
+    // Get all documents from the "fun_funds" collection
+    const querySnapshot = await getDocs(collection(db, "fun_funds"));
 
     let totalAmount = 0;
 
@@ -54,7 +56,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         totalAmount,
-        message: "Total travel funds retrieved successfully!",
+        message: "Total fun funds retrieved successfully!",
       }),
       {
         status: 200,
@@ -64,12 +66,9 @@ export async function GET() {
       }
     );
   } catch (error) {
-    console.error(
-      "Error retrieving total travel funds from Firestore: ",
-      error
-    );
+    console.error("Error retrieving fun funds from Firestore: ", error);
     return new Response(
-      JSON.stringify({ error: "Failed to retrieve total travel funds" }),
+      JSON.stringify({ error: "Failed to retrieve fun funds" }),
       {
         status: 500,
         headers: {

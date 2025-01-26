@@ -4,17 +4,19 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 export const dynamic = "force-dynamic";
 export async function POST(request) {
   try {
-    const { amount, timestamp } = await request.json();
+    const { amount, timestamp, wallet, remarks } = await request.json();
 
     const docRef = await addDoc(collection(db, "wants"), {
       amount: Number(amount),
       timestamp: new Date(timestamp),
+      wallet: wallet,
+      remarks: remarks,
     });
 
     return new Response(
       JSON.stringify({
         id: docRef.id,
-        message: "Wants Amount added successfully!",
+        message: "Wants Expenses added successfully!",
       }),
       {
         status: 200,
@@ -24,7 +26,7 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding wants amount to Firestore: ", error);
+    console.error("Error adding wants expenses to Firestore: ", error);
     return new Response(
       JSON.stringify({ error: "Failed to add wants amount" }),
       {
@@ -54,7 +56,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         totalAmount,
-        message: "Total wants retrieved successfully!",
+        message: "Total wants expenses retrieved successfully!",
       }),
       {
         status: 200,
@@ -64,7 +66,10 @@ export async function GET() {
       }
     );
   } catch (error) {
-    console.error("Error retrieving total wants from Firestore: ", error);
+    console.error(
+      "Error retrieving total wants expenses from Firestore: ",
+      error
+    );
     return new Response(
       JSON.stringify({ error: "Failed to retrieve total wants" }),
       {
