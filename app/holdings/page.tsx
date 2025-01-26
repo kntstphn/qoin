@@ -5,9 +5,7 @@ import React from "react";
 function Page() {
   return (
     <ProtectedRoute>
-      <div>
-        <Holdings />
-      </div>
+      <Holdings />
     </ProtectedRoute>
   );
 }

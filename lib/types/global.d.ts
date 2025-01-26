@@ -21,3 +21,8 @@ interface DisbursementModal {
   modal: boolean;
   holdings: { name: string }[];
 }
+
+interface WalletContainer {
+  bank: string;
+  id: string;
+}

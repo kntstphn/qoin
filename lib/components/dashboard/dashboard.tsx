@@ -8,7 +8,7 @@ import DisbursementModal from "../modal/disbursementModal";
 function Dashboard() {
   const [wants, setWants] = useState<number>(0);
   const [needs, setNeeds] = useState<number>(0);
-  const [funFunds, setFunFunds] = useState<number>(0);
+  const [leisureFunds, setLeisureFunds] = useState<number>(0);
   const [savings, setSavings] = useState<number>(0);
   const [emergencyFunds, setEmergencyFunds] = useState<number>(0);
   const [debt, setDebt] = useState<number>(0);
@@ -85,8 +85,8 @@ function Dashboard() {
   }
 
   // Fetch actual fun funds
-  async function fetchFunFunds() {
-    const response = await fetch("/api/savings");
+  async function fetchLeisureFunds() {
+    const response = await fetch("/api/leisure_funds");
     const data = await response.json();
 
     if (response.ok) {
@@ -99,12 +99,12 @@ function Dashboard() {
 
       const funds = await expenseResponse.json();
       if (expenseResponse.ok) {
-        setFunFunds(funds.totalAmount - data.totalAmount);
+        setLeisureFunds(funds.totalAmount - data.totalAmount);
       } else {
-        console.error("Failed to fetch total expenses on fun funds amount");
+        console.error("Failed to fetch total expenses on leisure funds amount");
       }
     } else {
-      console.error("Failed to fetch total fun funds amount");
+      console.error("Failed to fetch total leisure funds amount");
     }
   }
 
@@ -122,7 +122,7 @@ function Dashboard() {
 
       const funds = await expenseResponse.json();
       if (expenseResponse.ok) {
-        setFunFunds(funds.totalAmount - data.totalAmount);
+        setEmergencyFunds(funds.totalAmount - data.totalAmount);
       } else {
         console.error("Failed to fetch total expenses on fun funds amount");
       }
@@ -163,18 +163,35 @@ function Dashboard() {
     }
   }
 
+  async function fetchHoldings() {
+    try {
+      const response = await fetch("/api/holdings");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch holdings");
+      }
+
+      const data = await response.json();
+      setHoldings(data);
+    } catch (error) {
+      // Handle any errors that occurred during the fetch
+      console.error("Error fetching holdings:", error);
+    }
+  }
+
   useEffect(() => {
     fetchTotalWants();
     fetchTotalNeeds();
     fetchTotalSavings();
-    fetchFunFunds();
+    fetchLeisureFunds();
     fetchTotalEmergencyFunds();
     fetchTotalDebts();
     fetchTotalCredits();
+    fetchHoldings();
   }, [modal]);
 
   return (
-    <div className="text-[whitesmoke] h-full flex flex-col justify-around gap-6 py-5 px-7 mb-10">
+    <div className="text-[whitesmoke] h-[100vh] flex flex-col gap-6 py-5 px-7 mb-10">
       {modal && bottomNav === "tracker" && (
         <ExpenditureModal
           modal={modal}
@@ -242,7 +259,7 @@ function Dashboard() {
               Php
             </span>
             <span className=" text-[24px] text-Cinnabar font-bold">
-              {funFunds.toFixed(2)}
+              {leisureFunds.toFixed(2)}
             </span>
           </div>
         </div>

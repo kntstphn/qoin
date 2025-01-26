@@ -25,7 +25,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="apple-mobile-web-app-title" content="Qoin" />
       </head>
-      <body className={`block h-[100vh] ${inter.className}`}>
+      <body className={`block max-h-screen${inter.className}`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

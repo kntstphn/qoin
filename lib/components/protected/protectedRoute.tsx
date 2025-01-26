@@ -15,7 +15,11 @@ const ProtectedRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   }, [user, loading, router]);
 
   if (loading || !user) {
-    return <p>Loading...</p>;
+    return (
+      <div className="text-[whitesmoke] h-[100vh] flex flex-col gap-6 py-5 px-7 mb-10">
+        Loading...
+      </div>
+    );
   }
 
   return children;
