@@ -86,11 +86,11 @@ function Dashboard() {
 
   // Fetch actual fun funds
   async function fetchLeisureFunds() {
-    const response = await fetch("/api/leisure_funds");
+    const response = await fetch("/api/leisureFunds");
     const data = await response.json();
 
     if (response.ok) {
-      const expenseResponse = await fetch(`/api/funds?type=fun_funds`, {
+      const expenseResponse = await fetch(`/api/funds?type=leisure_funds`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -249,10 +249,10 @@ function Dashboard() {
             </span>
           </div>
         </div>
-        {/* Fun Funds */}
+        {/* Leisure Funds */}
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
-            Fun Funds
+            Leisure Funds
           </span>
           <div className="flex gap-2">
             <span className="text-[20px] flex items-center text-gray-600">
