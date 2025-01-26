@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import BottomNav from "./bottomNav";
-import { Console } from "console";
 import ExpenditureModal from "../modal/expenditureModal";
 import DisbursementModal from "../modal/disbursementModal";
 
@@ -17,21 +16,6 @@ function Dashboard() {
   const [modal, setModal] = useState(false);
   const [bottomNav, setBottomNav] = useState(" ");
   const [holdings, setHoldings] = useState<{ name: string }[]>([]);
-
-  async function fetchHoldings() {
-    try {
-      const response = await fetch("/api/holdings");
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch holdings");
-      }
-
-      const data = await response.json();
-      setHoldings(data);
-    } catch (error) {
-      console.error("Error fetching holdings:", error);
-    }
-  }
 
   // Fetch actual needs
   async function fetchTotalNeeds() {
@@ -187,7 +171,6 @@ function Dashboard() {
     fetchTotalEmergencyFunds();
     fetchTotalDebts();
     fetchTotalCredits();
-    fetchHoldings();
   }, [modal]);
 
   return (
