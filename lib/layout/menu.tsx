@@ -35,7 +35,7 @@ function Menu() {
       {user && (
         <div className="text-black text-[20px] hidden lg:flex gap-10">
           <a href="/dashboard">Dashboard</a>
-          <a href="/expenses">Expenses</a>
+          <a href="/holdings">Holdings</a>
           <a href="/balances">Balances</a>
           <button onClick={handleLogout}>Logout</button>
         </div>
