@@ -6,7 +6,9 @@ import { useAuth } from "@lib/layout/authContext";
 
 function Holdings() {
   const { user } = useAuth();
-  const [holdings, setHoldings] = useState([]);
+  const [holdings, setHoldings] = useState<
+    { wallet: string; totalAmount: number }[]
+  >([]);
 
   async function fetchHoldingsData() {
     try {
@@ -32,7 +34,9 @@ function Holdings() {
       console.log("KENT combinedData:", combinedData); // ✅ Logs combined documents
 
       // Group by wallet name and sum the amounts
-      const groupedHoldings = combinedData.reduce((acc: any, item: any) => {
+      const groupedHoldings = combinedData.reduce<{
+        [key: string]: { wallet: string; totalAmount: number };
+      }>((acc, item) => {
         if (!acc[item.wallet]) {
           acc[item.wallet] = {
             wallet: item.wallet,
@@ -44,9 +48,6 @@ function Holdings() {
       }, {});
 
       const holdingsArray = Object.values(groupedHoldings); // Convert grouped object to array
-
-      console.log("KENT groupedHoldings:", holdingsArray); // ✅ Logs grouped holdings
-
       setHoldings(holdingsArray);
     } catch (error) {
       console.error("Error fetching holdings data:", error);
