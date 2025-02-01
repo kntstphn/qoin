@@ -57,23 +57,11 @@ function Dashboard() {
 
   // Fetch actual fun funds
   async function fetchLeisureFunds() {
-    const response = await fetch("/api/leisureFunds");
+    const response = await fetch(`/api/leisure_funds?userId=${user?.uid}`);
     const data = await response.json();
 
     if (response.ok) {
-      const expenseResponse = await fetch(`/api/funds?type=leisure_funds`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const funds = await expenseResponse.json();
-      if (expenseResponse.ok) {
-        setLeisureFunds(funds.totalAmount - data.totalAmount);
-      } else {
-        console.error("Failed to fetch total expenses on leisure funds amount");
-      }
+      setLeisureFunds(data.totalAmount);
     } else {
       console.error("Failed to fetch total leisure funds amount");
     }
@@ -145,7 +133,7 @@ function Dashboard() {
     fetchTotalWants();
     fetchTotalNeeds();
     fetchTotalSavings();
-    // fetchLeisureFunds();
+    fetchLeisureFunds();
     fetchTotalEmergencyFunds();
     // fetchTotalDebts();
     // fetchTotalCredits();
@@ -212,7 +200,7 @@ function Dashboard() {
           </div>
         </div>
         {/* Leisure Funds */}
-        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Leisure Funds
           </span>
@@ -224,7 +212,7 @@ function Dashboard() {
               {leisureFunds.toFixed(2)}
             </span>
           </div>
-        </div> */}
+        </div>
         {/* Emergency Funds */}
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
