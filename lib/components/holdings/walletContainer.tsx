@@ -6,35 +6,37 @@ function WalletContainer({ bank, id }: WalletContainer) {
 
   async function fetchWalletExpenses() {
     const needsExpenses = await fetch(`/api/needs/byWallet?wallet=${bank}`);
-    const wantsExpenses = await fetch(`/api/wants/byWallet?wallet=${bank}`);
-    const savingsExpenses = await fetch(`/api/savings/byWallet?wallet=${bank}`);
-    const emergencyExpenses = await fetch(
-      `/api/emergencyFunds/byWallet?wallet=${bank}`
-    );
-    const leisureExpenses = await fetch(
-      `/api/leisureFunds/byWallet?wallet=${bank}`
-    );
+    // const wantsExpenses = await fetch(`/api/wants/byWallet?wallet=${bank}`);
+    // const savingsExpenses = await fetch(`/api/savings/byWallet?wallet=${bank}`);
+    // const emergencyExpenses = await fetch(
+    //   `/api/emergencyFunds/byWallet?wallet=${bank}`
+    // );
+    // const leisureExpenses = await fetch(
+    //   `/api/leisureFunds/byWallet?wallet=${bank}`
+    // );
 
     if (
-      needsExpenses.ok &&
-      wantsExpenses.ok &&
-      savingsExpenses.ok &&
-      emergencyExpenses.ok &&
-      leisureExpenses.ok
+      needsExpenses.ok
+      // wantsExpenses.ok &&
+      // savingsExpenses.ok &&
+      // emergencyExpenses.ok &&
+      // leisureExpenses.ok
     ) {
       const needs = await needsExpenses.json();
-      const wants = await wantsExpenses.json();
-      const savings = await savingsExpenses.json();
-      const emergency = await emergencyExpenses.json();
-      const leisure = await leisureExpenses.json();
+      // const wants = await wantsExpenses.json();
+      // const savings = await savingsExpenses.json();
+      // const emergency = await emergencyExpenses.json();
+      // const leisure = await leisureExpenses.json();
 
       setExpenses(
-        needs.totalAmount +
-          wants.totalAmount +
-          savings.totalAmount +
-          emergency.totalAmount +
-          leisure.totalAmount
+        needs.totalAmount
+        // wants.totalAmount +
+        // savings.totalAmount +
+        // emergency.totalAmount +
+        // leisure.totalAmount
       );
+
+      console.log("Expenses " + bank + ": " + expenses);
     }
   }
 

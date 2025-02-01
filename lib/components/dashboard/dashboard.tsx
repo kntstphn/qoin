@@ -4,8 +4,10 @@ import React, { useState, useEffect } from "react";
 import BottomNav from "./bottomNav";
 import ExpenditureModal from "../modal/expenditureModal";
 import DisbursementModal from "../modal/disbursementModal";
+import { useAuth } from "@lib/layout/authContext";
 
 function Dashboard() {
+  const { user } = useAuth();
   const [wants, setWants] = useState<number>(0);
   const [needs, setNeeds] = useState<number>(0);
   const [leisureFunds, setLeisureFunds] = useState<number>(0);
@@ -38,23 +40,11 @@ function Dashboard() {
 
   // Fetch actual wants
   async function fetchTotalWants() {
-    const response = await fetch("/api/wants");
+    const response = await fetch(`/api/wants?userId=${user?.uid}`);
     const data = await response.json();
 
     if (response.ok) {
-      const expenseResponse = await fetch(`/api/funds?type=wants`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const funds = await expenseResponse.json();
-      if (expenseResponse.ok) {
-        setWants(funds.totalAmount - data.totalAmount);
-      } else {
-        console.error("Failed to fetch total expenses on wants amount");
-      }
+      setWants(data.totalAmount);
     } else {
       console.error("Failed to fetch total wants amount");
     }
@@ -180,15 +170,18 @@ function Dashboard() {
   }
 
   useEffect(() => {
+    if (user?.uid) {
+      fetchHoldings();
+    }
     fetchTotalWants();
-    fetchTotalNeeds();
-    fetchTotalSavings();
-    fetchLeisureFunds();
-    fetchTotalEmergencyFunds();
-    fetchTotalDebts();
-    fetchTotalCredits();
-    fetchHoldings();
-  }, [modal]);
+    // fetchTotalNeeds();
+    // fetchTotalSavings();
+    // fetchLeisureFunds();
+    // fetchTotalEmergencyFunds();
+    // fetchTotalDebts();
+    // fetchTotalCredits();
+    // fetchHoldings();
+  }, [user, modal]);
 
   return (
     <div className="text-[whitesmoke] h-[100vh] flex flex-col gap-6 py-5 px-7 mb-10">
@@ -208,7 +201,7 @@ function Dashboard() {
       )}
       <>
         {/* Needs */}
-        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Needs
           </span>
@@ -220,7 +213,7 @@ function Dashboard() {
               {needs.toFixed(2)}
             </span>
           </div>
-        </div>
+        </div> */}
         {/* Wants */}
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
@@ -236,7 +229,7 @@ function Dashboard() {
           </div>
         </div>
         {/* Savings */}
-        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Savings
           </span>
@@ -248,9 +241,9 @@ function Dashboard() {
               {savings.toFixed(2)}
             </span>
           </div>
-        </div>
+        </div> */}
         {/* Leisure Funds */}
-        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Leisure Funds
           </span>
@@ -262,9 +255,9 @@ function Dashboard() {
               {leisureFunds.toFixed(2)}
             </span>
           </div>
-        </div>
+        </div> */}
         {/* Emergency Funds */}
-        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Emergency Funds
           </span>
@@ -276,7 +269,7 @@ function Dashboard() {
               {emergencyFunds.toFixed(2)}
             </span>
           </div>
-        </div>
+        </div> */}
         {/* Payables */}
         {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">

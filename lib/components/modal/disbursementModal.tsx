@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useAuth } from "@lib/layout/authContext";
 
 function DisbursementModal({ modal, setModal, holdings }: DisbursementModal) {
+  const { user } = useAuth();
   const [amount, setAmount] = useState("");
   const [timestamp, setTimestamp] = useState("");
   const [wallet, setWallet] = useState("");
@@ -13,9 +15,9 @@ function DisbursementModal({ modal, setModal, holdings }: DisbursementModal) {
   });
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault(); // Prevent default form submission
 
-    // Check for empty fields and highlight them
+    // Validate form fields
     setErrors({
       amount: !amount,
       timestamp: !timestamp,
@@ -28,31 +30,74 @@ function DisbursementModal({ modal, setModal, holdings }: DisbursementModal) {
     }
 
     try {
-      // Make a POST request to the API
-      const response = await fetch(`/api/funds`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: type,
-          wallet: wallet,
-          amount: Number(amount), // Convert to number
-          timestamp: new Date(timestamp),
-        }),
-      });
+      // Fetch existing funds
+      const checkExistingFunds = await fetch(
+        `/api/${type}/byWallet?userId=${user?.uid}&wallet=${wallet}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const existingFunds = await checkExistingFunds.json();
+      console.log("Existing Funds:", existingFunds); // Debugging log
+
+      let updatedAmount = Number(amount); // Convert input to number
+
+      // If funds exist, add to existing amount
+      if (
+        Array.isArray(existingFunds?.documents) &&
+        existingFunds.documents.length > 0
+      ) {
+        const currentAmount = Number(existingFunds.documents[0].amount || 0);
+        updatedAmount += currentAmount; // Add new amount to existing
+      }
+
+      const payload = {
+        userId: user?.uid,
+        wallet,
+        amount: updatedAmount, // Use updated amount
+        updatedOn: new Date(timestamp),
+      };
+
+      let response;
+
+      if (
+        Array.isArray(existingFunds?.documents) &&
+        existingFunds.documents.length > 0
+      ) {
+        // If funds exist, update (PUT)
+        response = await fetch(`/api/${type}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        // If funds don't exist, create new entry (POST)
+        response = await fetch(`/api/${type}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+      }
 
       const data = await response.json();
+
       if (response.ok) {
         console.log("Success:", data);
-        setModal(false); // Close the modal on successful submission
+        setModal(false); // Close modal on success
       } else {
         console.error("Error:", data.error);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-    setModal(false);
   };
 
   // Update the error state when the user starts typing

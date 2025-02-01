@@ -1,6 +1,8 @@
+import { useAuth } from "@/lib/layout/authContext";
 import React, { useState } from "react";
 
 function ExpenditureModal({ modal, setModal, holdings }: ExpenditureModal) {
+  const { user } = useAuth();
   const [amount, setAmount] = useState("");
   const [remarks, setRemarks] = useState("");
   const [timestamp, setTimestamp] = useState("");
@@ -32,28 +34,69 @@ function ExpenditureModal({ modal, setModal, holdings }: ExpenditureModal) {
     }
 
     try {
-      const url = `/api/${type}`;
+      const url = `/api/${type}/transaction`;
 
-      // Make a POST request to the API
+      // Make a POST request to the API to add the transaction
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: user?.uid,
           amount: Number(amount),
           remarks,
-          timestamp,
+          updatedOn: new Date(timestamp),
           wallet,
         }),
       });
 
       const data = await response.json();
+
       if (response.ok) {
-        console.log("Success:", data);
-        setModal(false); // Close the modal on successful submission
+        console.log("Transaction added successfully:", data);
+
+        // Now, get the current balance for the specific type based on userId and wallet
+        const getUrl = `/api/${type}/byWallet?userId=${user?.uid}&wallet=${wallet}`;
+        const getResponse = await fetch(getUrl);
+
+        if (getResponse.ok) {
+          const getData = await getResponse.json(); // This is where I missed declaring getData
+
+          // Deduct the transaction amount from the current value
+          const updatedAmount = getData.documents[0].amount - Number(amount); // Subtract the amount from the fetched data
+
+          // Now, perform the PUT request to update the type with the new amount
+          const putUrl = `/api/${type}`;
+          const putResponse = await fetch(putUrl, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: user?.uid,
+              amount: updatedAmount, // Update the amount with the deducted value
+              updatedOn: new Date(timestamp),
+              wallet,
+            }),
+          });
+
+          const putData = await putResponse.json();
+
+          if (putResponse.ok) {
+            console.log("Wallet updated successfully:", putData);
+            setModal(false); // Close the modal on successful submission
+          } else {
+            console.error("Error updating wallet:", putData.error);
+          }
+        } else {
+          console.error(
+            "Error fetching data for wallet:",
+            getResponse.statusText
+          );
+        }
       } else {
-        console.error("Error:", data.error);
+        console.error("Error adding transaction:", data.error);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -159,7 +202,9 @@ function ExpenditureModal({ modal, setModal, holdings }: ExpenditureModal) {
                     <option value="wants">Wants</option>
                     <option value="savings">Savings</option>
                     <option value="leisure_funds">Leisure Funds</option>
-                    <option value="emergency_funds">Emergency Funds</option>
+                    <option value="emergency_funds_transaction">
+                      Emergency Funds
+                    </option>
                   </select>
                   <label htmlFor="remarks">Remarks</label>
                   <textarea
