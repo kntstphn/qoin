@@ -24,5 +24,5 @@ interface DisbursementModal {
 
 interface WalletContainer {
   bank: string;
-  id: string;
+  totalAmount: number;
 }

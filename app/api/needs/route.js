@@ -16,7 +16,6 @@ export async function GET(request) {
     // Extract userId from query parameters
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
-    console.log(userId);
 
     if (!userId) {
       return new Response(JSON.stringify({ error: "userId is required" }), {
@@ -34,17 +33,20 @@ export async function GET(request) {
     const querySnapshot = await getDocs(q);
 
     let totalAmount = 0;
+    const documents = [];
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       if (data.amount) {
         totalAmount += data.amount;
       }
+      documents.push({ id: doc.id, ...data });
     });
 
     return new Response(
       JSON.stringify({
         totalAmount,
+        documents,
         message: "Total needs expenses retrieved successfully!",
       }),
       {
