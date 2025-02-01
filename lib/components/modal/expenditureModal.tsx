@@ -202,9 +202,7 @@ function ExpenditureModal({ modal, setModal, holdings }: ExpenditureModal) {
                     <option value="wants">Wants</option>
                     <option value="savings">Savings</option>
                     <option value="leisure_funds">Leisure Funds</option>
-                    <option value="emergency_funds_transaction">
-                      Emergency Funds
-                    </option>
+                    <option value="emergency_funds">Emergency Funds</option>
                   </select>
                   <label htmlFor="remarks">Remarks</label>
                   <textarea
