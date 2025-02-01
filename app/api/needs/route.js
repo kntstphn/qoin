@@ -1,11 +1,37 @@
 import { db } from "@lib/firebase/config";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+} from "firebase/firestore";
 
 export const dynamic = "force-dynamic";
-export async function GET() {
+
+// GET ALL needs amount
+export async function GET(request) {
   try {
-    // Get all documents from the "needs" collection
-    const querySnapshot = await getDocs(collection(db, "needs"));
+    // Extract userId from query parameters
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+    console.log(userId);
+
+    if (!userId) {
+      return new Response(JSON.stringify({ error: "userId is required" }), {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
+    // Create a query to get documents where userId matches
+    const q = query(collection(db, "needs"), where("userId", "==", userId));
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
 
     let totalAmount = 0;
 
@@ -45,22 +71,22 @@ export async function GET() {
   }
 }
 
+// CREATE A NEW WANT
 export async function POST(request) {
   try {
-    const { amount, timestamp, remarks, wallet } = await request.json();
+    const { amount, updatedOn, wallet, userId } = await request.json();
 
-    // Add the value to a Firestore collection
     const docRef = await addDoc(collection(db, "needs"), {
       amount: Number(amount),
-      timestamp: new Date(timestamp),
-      remarks: remarks,
+      userId: userId,
+      updatedOn: new Date(updatedOn),
       wallet: wallet,
     });
 
     return new Response(
       JSON.stringify({
         id: docRef.id,
-        message: "Needs Expenses successfully added!",
+        message: "needs added successfully!",
       }),
       {
         status: 200,
@@ -70,9 +96,76 @@ export async function POST(request) {
       }
     );
   } catch (error) {
-    console.error("Error adding needs expenses to Firestore: ", error);
+    console.error("Error adding needs to Firestore: ", error);
     return new Response(
       JSON.stringify({ error: "Failed to add needs amount" }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+}
+
+export async function PUT(request) {
+  try {
+    // Extract data from the request body
+    const { amount, updatedOn, wallet, userId } = await request.json();
+
+    // Create a query to find the document(s) with the matching userId and wallet
+    const q = query(
+      collection(db, "needs"),
+      where("userId", "==", userId),
+      where("wallet", "==", wallet)
+    );
+
+    // Execute the query
+    const querySnapshot = await getDocs(q);
+
+    // Check if any documents match the query
+    if (querySnapshot.empty) {
+      return new Response(
+        JSON.stringify({ error: "No matching document found" }),
+        {
+          status: 404,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
+    // Update each matching document
+    const updates = [];
+    querySnapshot.forEach((doc) => {
+      updates.push(
+        updateDoc(doc.ref, {
+          amount: Number(amount),
+          UpdatedOn: new Date(updatedOn),
+        })
+      );
+    });
+
+    // Wait for all updates to complete
+    await Promise.all(updates);
+
+    return new Response(
+      JSON.stringify({
+        message: "needs updated successfully!",
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } catch (error) {
+    console.error("Error updating needs in Firestore: ", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to update needs amount" }),
       {
         status: 500,
         headers: {

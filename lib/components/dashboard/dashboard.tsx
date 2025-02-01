@@ -21,18 +21,11 @@ function Dashboard() {
 
   // Fetch actual needs
   async function fetchTotalNeeds() {
-    const response = await fetch("/api/needs"); // This assumes you have the GET method setup on this endpoint
+    const response = await fetch(`/api/needs?userId=${user?.uid}`);
     const data = await response.json();
 
     if (response.ok) {
-      const expenseResponse = await fetch("/api/funds?type=needs");
-
-      const funds = await expenseResponse.json();
-      if (expenseResponse.ok) {
-        setNeeds(funds.totalAmount - data.totalAmount);
-      } else {
-        console.error("Failed to fetch total expenses on needs amount");
-      }
+      setNeeds(data.totalAmount);
     } else {
       console.error("Failed to fetch total needs amount");
     }
@@ -174,7 +167,7 @@ function Dashboard() {
       fetchHoldings();
     }
     fetchTotalWants();
-    // fetchTotalNeeds();
+    fetchTotalNeeds();
     // fetchTotalSavings();
     // fetchLeisureFunds();
     // fetchTotalEmergencyFunds();
@@ -201,7 +194,7 @@ function Dashboard() {
       )}
       <>
         {/* Needs */}
-        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Needs
           </span>
@@ -213,7 +206,7 @@ function Dashboard() {
               {needs.toFixed(2)}
             </span>
           </div>
-        </div> */}
+        </div>
         {/* Wants */}
         <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
