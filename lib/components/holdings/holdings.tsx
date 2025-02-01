@@ -60,7 +60,7 @@ function Holdings() {
   }, []);
 
   return (
-    <div className="text-[whitesmoke] h-full flex flex-col justify-around gap-6 py-5 px-7 mb-10">
+    <div className="text-[whitesmoke] h-[100vh] flex flex-col gap-6 py-5 px-7 mb-10">
       {holdings.map((holding: any) => (
         <WalletContainer
           key={holding.wallet}
