@@ -45,23 +45,11 @@ function Dashboard() {
 
   // Fetch actual savings
   async function fetchTotalSavings() {
-    const response = await fetch("/api/savings");
+    const response = await fetch(`/api/savings?userId=${user?.uid}`);
     const data = await response.json();
 
     if (response.ok) {
-      const expenseResponse = await fetch(`/api/funds?type=savings`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const funds = await expenseResponse.json();
-      if (expenseResponse.ok) {
-        setSavings(funds.totalAmount - data.totalAmount);
-      } else {
-        console.error("Failed to fetch total expenses on ssavingss amount");
-      }
+      setSavings(data.totalAmount);
     } else {
       console.error("Failed to fetch total savings amount");
     }
@@ -168,7 +156,7 @@ function Dashboard() {
     }
     fetchTotalWants();
     fetchTotalNeeds();
-    // fetchTotalSavings();
+    fetchTotalSavings();
     // fetchLeisureFunds();
     // fetchTotalEmergencyFunds();
     // fetchTotalDebts();
@@ -222,7 +210,7 @@ function Dashboard() {
           </div>
         </div>
         {/* Savings */}
-        {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
+        <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
             Savings
           </span>
@@ -234,7 +222,7 @@ function Dashboard() {
               {savings.toFixed(2)}
             </span>
           </div>
-        </div> */}
+        </div>
         {/* Leisure Funds */}
         {/* <div className="px-3 border-l-2 border-Firebrick flex flex-col">
           <span className="text-gray-500 font-semibold text-[14px] mb-[-10px]">
