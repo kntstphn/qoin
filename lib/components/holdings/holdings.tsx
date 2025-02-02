@@ -3,9 +3,13 @@
 import React, { useState, useEffect } from "react";
 import WalletContainer from "./walletContainer";
 import { useAuth } from "@lib/layout/authContext";
+import BottomNav from "./botttomNav";
+import WalletModal from "../modal/walletModal";
 
 function Holdings() {
   const { user } = useAuth();
+  const [modal, setModal] = useState(false);
+  const [bottomNav, setBottomNav] = useState(" ");
   const [holdings, setHoldings] = useState<
     { wallet: string; totalAmount: number }[]
   >([]);
@@ -25,8 +29,6 @@ function Holdings() {
       );
 
       const results = await Promise.all(fetchRequests);
-
-      console.log("KENT results:", results); // ✅ Logs fetched data
 
       // Extract and combine all 'documents' arrays
       const combinedData = results.flatMap((result) => result.documents || []);
@@ -61,13 +63,17 @@ function Holdings() {
 
   return (
     <div className="text-[whitesmoke] h-[100vh] flex flex-col gap-6 py-5 px-7 mb-10">
-      {holdings.map((holding: any) => (
-        <WalletContainer
-          key={holding.wallet}
-          bank={holding.wallet} // Pass wallet name
-          totalAmount={holding.totalAmount} // Pass total amount for that wallet
-        />
-      ))}
+      {modal && <WalletModal modal={modal} setModal={setModal} />}
+      <>
+        {holdings.map((holding: any) => (
+          <WalletContainer
+            key={holding.wallet}
+            bank={holding.wallet} // Pass wallet name
+            totalAmount={holding.totalAmount} // Pass total amount for that wallet
+          />
+        ))}
+      </>
+      {!modal && <BottomNav setModal={setModal} />}
     </div>
   );
 }

@@ -18,7 +18,7 @@ function BottomNav({ setModal, setBottomNav, bottomNav }: BottomNavProps) {
           setBottomNav("tracker");
         }}
       >
-        <GiTakeMyMoney size={24} className="text-Cinnabar" />
+        <GiTakeMyMoney size={20} className="text-Cinnabar" />
         Expenditure
       </button>
       <button
@@ -28,7 +28,7 @@ function BottomNav({ setModal, setBottomNav, bottomNav }: BottomNavProps) {
           setBottomNav("savings");
         }}
       >
-        <GiPiggyBank size={24} className="text-Cinnabar" />
+        <GiPiggyBank size={20} className="text-Cinnabar" />
         Disbursement
       </button>
     </nav>

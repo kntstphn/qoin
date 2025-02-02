@@ -48,7 +48,7 @@ function Menu() {
           />
           {showMenu && (
             <div className="bg-black/50 fixed top-0 bottom-0 left-0 right-0 w-full z-10">
-              <div className="text-gray-500 fixed flex flex-col h-full w-[80%] gap-5 top-0 bottom-0 right-0 bg-slate-950/90 p-5 z-50 rounded-l-3xl">
+              <div className="text-gray-400 fixed flex flex-col h-full w-[80%] gap-5 top-0 bottom-0 right-0 bg-slate-950/95 p-5 z-50 rounded-l-3xl">
                 <div
                   className="flex w-full justify-end"
                   onClick={() => setShowMenu(!showMenu)}

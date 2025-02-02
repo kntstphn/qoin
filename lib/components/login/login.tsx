@@ -22,10 +22,9 @@ function Login() {
     }
   };
   return (
-    <div className="text-[whitesmoke] flex lg:flex-row flex-col justify-center global-container lg:px-[200px] lg:pt-[100px] w-full h-full">
-      <div className="flex w-full bg-red-300 lg:h-[500px] p-5">test</div>
-      <div className="flex w-full bg-green-300 lg:h-[500px] justify-center items-center p-5">
-        <form className="flex flex-col w-2/3" onSubmit={handleLogin}>
+    <div className="text-[whitesmoke] flex lg:flex-row flex-col justify-center global-container lg:px-[200px] lg:pt-[100px] w-full h-[100vh]">
+      <div className="flex w-full lg:h-[500px] bg-[#232b2b] justify-center items-center p-5 rounded-3xl">
+        <form className="flex flex-col w-[90%]" onSubmit={handleLogin}>
           <label className="mb-2" htmlFor="username">
             Username
           </label>
@@ -48,7 +47,7 @@ function Login() {
           />
           <button
             type="submit"
-            className="p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="p-2 mt-4 text-white bg-gray-700 rounded-lg"
           >
             Login
           </button>

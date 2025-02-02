@@ -10,6 +10,10 @@ interface BottomNavProps {
   bottomNav: string;
 }
 
+interface BottomNavPropsHoldings {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 interface ExpenditureModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   modal: boolean;
@@ -20,6 +24,11 @@ interface DisbursementModal {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
   modal: boolean;
   holdings: { name: string }[];
+}
+
+interface WalletModal {
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modal: boolean;
 }
 
 interface WalletContainer {

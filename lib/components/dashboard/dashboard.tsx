@@ -112,7 +112,11 @@ function Dashboard() {
 
   async function fetchHoldings() {
     try {
-      const response = await fetch("/api/holdings");
+      if (!user?.uid) {
+        throw new Error("User ID is required");
+      }
+
+      const response = await fetch(`/api/holdings?userId=${user.uid}`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch holdings");
@@ -121,7 +125,6 @@ function Dashboard() {
       const data = await response.json();
       setHoldings(data);
     } catch (error) {
-      // Handle any errors that occurred during the fetch
       console.error("Error fetching holdings:", error);
     }
   }
