@@ -47,18 +47,20 @@ function Menu() {
             onClick={() => setShowMenu(!showMenu)}
           />
           {showMenu && (
-            <div className="text-black fixed flex flex-col h-full w-[80%] gap-5 top-0 bottom-0 right-0 bg-red-300 p-5 z-50">
-              <div
-                className="flex w-full justify-end"
-                onClick={() => setShowMenu(!showMenu)}
-              >
-                X
+            <div className="bg-black/50 fixed top-0 bottom-0 left-0 right-0 w-full z-10">
+              <div className="text-gray-500 fixed flex flex-col h-full w-[80%] gap-5 top-0 bottom-0 right-0 bg-slate-950/90 p-5 z-50 rounded-l-3xl">
+                <div
+                  className="flex w-full justify-end"
+                  onClick={() => setShowMenu(!showMenu)}
+                >
+                  X
+                </div>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/holdings">Holdings</a>
+                <a href="/credit">Credit</a>
+                <a href="/debt">Debt</a>
+                <button onClick={handleLogout}>Logout</button>
               </div>
-              <a href="/dashboard">Dashboard</a>
-              <a href="/holdings">Holdings</a>
-              <a href="/credit">Credit</a>
-              <a href="/debt">Debt</a>
-              <button onClick={handleLogout}>Logout</button>
             </div>
           )}
         </>
