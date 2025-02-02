@@ -57,8 +57,7 @@ function Menu() {
                 </div>
                 <a href="/dashboard">Dashboard</a>
                 <a href="/holdings">Holdings</a>
-                <a href="/credit">Credit</a>
-                <a href="/debt">Debt</a>
+                <a href="/balances">Balances</a>
                 <button onClick={handleLogout}>Logout</button>
               </div>
             </div>
