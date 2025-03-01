@@ -13,6 +13,7 @@ function Holdings() {
   const [holdings, setHoldings] = useState<
     { wallet: string; totalAmount: number }[]
   >([]);
+  const [combinedData, setCombinedData] = useState<any[]>([]);
 
   async function fetchHoldingsData() {
     try {
@@ -24,28 +25,43 @@ function Holdings() {
         "leisure_funds",
       ];
 
-      const fetchRequests = endpoints.map((type) =>
-        fetch(`/api/${type}?userId=${user?.uid}`).then((res) => res.json())
+      const fetchRequests = endpoints.map(
+        (type) =>
+          fetch(`/api/${type}?userId=${user?.uid}`)
+            .then((res) => res.json())
+            .then((data) =>
+              (data.documents || []).map((doc: any) => ({
+                ...doc,
+                category: type,
+              }))
+            ) // Add category field
       );
 
       const results = await Promise.all(fetchRequests);
 
-      // Extract and combine all 'documents' arrays
-      const combinedData = results.flatMap((result) => result.documents || []);
-
-      console.log("KENT combinedData:", combinedData); // ✅ Logs combined documents
+      // Combine all documents with their respective categories
+      const combinedData = results.flat();
+      setCombinedData(combinedData);
 
       // Group by wallet name and sum the amounts
       const groupedHoldings = combinedData.reduce<{
-        [key: string]: { wallet: string; totalAmount: number };
+        [key: string]: {
+          wallet: string;
+          totalAmount: number;
+          categories: string[];
+        };
       }>((acc, item) => {
         if (!acc[item.wallet]) {
           acc[item.wallet] = {
             wallet: item.wallet,
             totalAmount: 0,
+            categories: [],
           };
         }
         acc[item.wallet].totalAmount += item.amount;
+        if (!acc[item.wallet].categories.includes(item.category)) {
+          acc[item.wallet].categories.push(item.category);
+        }
         return acc;
       }, {});
 
@@ -70,6 +86,9 @@ function Holdings() {
             key={holding.wallet}
             bank={holding.wallet} // Pass wallet name
             totalAmount={holding.totalAmount} // Pass total amount for that wallet
+            combinedData={combinedData.filter(
+              (item) => item.wallet === holding.wallet
+            )}
           />
         ))}
       </>

@@ -20,7 +20,6 @@ function WalletModal({ modal, setModal }: WalletModal) {
       });
 
       if (response.ok) {
-        console.log("Wallet added successfully");
         setModal(false);
       } else {
         console.error("Error adding wallet");

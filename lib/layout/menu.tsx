@@ -12,11 +12,7 @@ function Menu() {
 
   const handleLogout = () => {
     signOut(auth)
-      .then(() => {
-        console.log("User signed out successfully");
-        // Optionally, redirect the user to the login page
-        // window.location.href = "/login";
-      })
+      .then(() => {})
       .catch((error) => {
         console.error("Error signing out: ", error);
       });

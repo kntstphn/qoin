@@ -54,8 +54,6 @@ function ExpenditureModal({ modal, setModal, holdings }: ExpenditureModal) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Transaction added successfully:", data);
-
         // Now, get the current balance for the specific type based on userId and wallet
         const getUrl = `/api/${type}/byWallet?userId=${user?.uid}&wallet=${wallet}`;
         const getResponse = await fetch(getUrl);
@@ -84,7 +82,6 @@ function ExpenditureModal({ modal, setModal, holdings }: ExpenditureModal) {
           const putData = await putResponse.json();
 
           if (putResponse.ok) {
-            console.log("Wallet updated successfully:", putData);
             setModal(false); // Close the modal on successful submission
           } else {
             console.error("Error updating wallet:", putData.error);

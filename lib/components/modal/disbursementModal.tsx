@@ -42,7 +42,6 @@ function DisbursementModal({ modal, setModal, holdings }: DisbursementModal) {
       );
 
       const existingFunds = await checkExistingFunds.json();
-      console.log("Existing Funds:", existingFunds); // Debugging log
 
       let updatedAmount = Number(amount); // Convert input to number
 
@@ -90,7 +89,6 @@ function DisbursementModal({ modal, setModal, holdings }: DisbursementModal) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Success:", data);
         setModal(false); // Close modal on success
       } else {
         console.error("Error:", data.error);

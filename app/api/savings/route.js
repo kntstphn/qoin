@@ -145,7 +145,7 @@ export async function PUT(request) {
       updates.push(
         updateDoc(doc.ref, {
           amount: Number(amount),
-          UpdatedOn: new Date(updatedOn),
+          updatedOn: new Date(updatedOn),
         })
       );
     });

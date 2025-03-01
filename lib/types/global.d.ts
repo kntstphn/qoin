@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 interface GlobalContextType {
   userAuth: boolean;
   setUserAuth: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,7 +33,4 @@ interface WalletModal {
   modal: boolean;
 }
 
-interface WalletContainer {
-  bank: string;
-  totalAmount: number;
-}
+
