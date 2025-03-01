@@ -27,6 +27,14 @@
       "@lib/*": ["./lib/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/funds/route.js", "app/api/needs/route.js"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/api/funds/route.js",
+    "app/api/needs/route.js",
+    "lib/types/global.d.ts"
+  ],
   "exclude": ["node_modules"]
 }

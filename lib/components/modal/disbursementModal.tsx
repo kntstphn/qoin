@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useAuth } from "@lib/layout/authContext";
 
-function DisbursementModal({ modal, setModal, holdings }: DisbursementModal) {
+function DisbursementModal({
+  modal,
+  setModal,
+  holdings,
+}: DisbursementModalProps) {
   const { user } = useAuth();
   const [amount, setAmount] = useState("");
   const [timestamp, setTimestamp] = useState("");

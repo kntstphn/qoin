@@ -10,7 +10,7 @@ import {
 
 function BottomNav({ setModal, setBottomNav, bottomNav }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-Onyx text-gray-500 text-sm font-bold flex justify-around py-2 rounded-t-3xl z-1 text-[10px]">
+    <nav className="fixed bottom-0 left-0 right-0 bg-Onyx text-gray-500 text-sm font-bold flex justify-around py-2 rounded-t-2xl z-1 text-[10px] mx-5">
       <button
         className="flex flex-col items-center"
         onClick={() => {
@@ -19,7 +19,6 @@ function BottomNav({ setModal, setBottomNav, bottomNav }: BottomNavProps) {
         }}
       >
         <GiTakeMyMoney size={20} className="text-Cinnabar" />
-        Expenditure
       </button>
       <button
         className="flex flex-col items-center"
@@ -29,7 +28,6 @@ function BottomNav({ setModal, setBottomNav, bottomNav }: BottomNavProps) {
         }}
       >
         <GiPiggyBank size={20} className="text-Cinnabar" />
-        Disbursement
       </button>
     </nav>
   );
