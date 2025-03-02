@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore";
+import TransactionContainer from "../components/homepage/transactionContainer";
 
 declare global {
   interface GlobalContextType {
@@ -32,5 +33,15 @@ declare global {
   interface WalletModal {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     modal: boolean;
+  }
+
+  interface TransactionContainerProps {
+    transaction: {
+      category: string;
+      amount: number;
+      updatedOn: Timestamp;
+      wallet: string;
+      remarks: string;
+    };
   }
 }
