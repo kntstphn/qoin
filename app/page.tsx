@@ -1,11 +1,11 @@
-import Dashboard from "@/lib/components/dashboard/dashboard";
+import Homepage from "@/lib/components/homepage/home";
 import ProtectedRoute from "@/lib/components/protected/protectedRoute";
 
 export default function Home() {
   return (
     <main>
       <ProtectedRoute>
-        <Dashboard />
+        <Homepage />
       </ProtectedRoute>
     </main>
   );

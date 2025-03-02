@@ -140,7 +140,6 @@ function Dashboard() {
     fetchTotalEmergencyFunds();
     // fetchTotalDebts();
     // fetchTotalCredits();
-    // fetchHoldings();
   }, [user, modal]);
 
   return (

@@ -55,7 +55,7 @@ function WalletContainer({
 
       {/* Accordion Section */}
       {isAccordionOpen && (
-        <div className=" p-3 rounded-md shadow-lg">
+        <div className=" p-3 rounded-md shadow-xl">
           <ul className="mt-1">
             {combinedData.map((item) => (
               <li key={item.id} className="text-Cinnabar py-2 flex flex-col">
